@@ -14,23 +14,23 @@ public class TodoController {
     @Autowired
     private TodoService todoService;
 
-    @GetMapping("/todo")
+    @GetMapping("/todos")
     public String showAllTodo(){
-        return "index_todo";
+        return "list_todo";
     }
 
-    @GetMapping("/todo/{id}")
+    @GetMapping("/todos/{id}")
     public String showTodo(Todo todo){
-        return "todo";
+        return "detail_todo";
     }
 
-    @PostMapping("/todo")
+    @PostMapping("/todos")
     public void createTodo(Todo todo){}
 
-    @PutMapping("/todo/{id}")
+    @PutMapping("/todos/{id}")
     public void updateTodo(Todo todo){}
 
-    @DeleteMapping("/todo/{id}")
+    @DeleteMapping("/todos/{id}")
     public void deleteTodo(Todo todo){}
 
 }
