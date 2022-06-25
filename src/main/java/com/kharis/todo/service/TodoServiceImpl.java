@@ -13,6 +13,11 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
+    public List<Todo> getByUsername(String username) {
+        return null;
+    }
+
+    @Override
     public Todo getTodoById(Integer todoId) {
         return null;
     }

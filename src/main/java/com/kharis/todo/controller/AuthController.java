@@ -4,13 +4,14 @@ import com.kharis.todo.model.User;
 import com.kharis.todo.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
+@SessionAttributes("user")
 public class AuthController {
     @Autowired
     private final AuthService authService;
@@ -20,7 +21,11 @@ public class AuthController {
     }
     
     @GetMapping("/")
-    public String index() {
+    public String index(ModelMap model) {
+        Object user = model.get("user");
+        if (user != null) {
+            return "redirect:/todos";
+        }
         return "redirect:/auth/login";
     }
 
@@ -41,20 +46,40 @@ public class AuthController {
 
     @PostMapping("/auth/login")
     public String doLogin(
+        ModelMap model,
         @RequestParam("username") String username, 
         @RequestParam("password") String password
     ) 
     {
         User user = authService.login(username, password);
         if (user != null) {
+            model.put("user", user);
             return "redirect:/todos";
         }
         return "login";
     }
 
     @PostMapping("/auth/register")
-    public void doRegister(){}
+    public String doRegister(
+        @RequestParam("username") String username, 
+        @RequestParam("email") String email,
+        @RequestParam("password") String password,
+        @RequestParam("confirmPassword") String confirmPassword
+    ) 
+    {
+        if (!password.equals(confirmPassword)) {
+            return "register";
+        }
+        User user = authService.register(username, email, password);
+        if (user != null) {
+            return "redirect:/todos";
+        }
+        return "register";
+    }
 
     @PostMapping("/auth/forgot-password")
-    public void doForgotPassword(){}
+    public String doForgotPassword(@RequestParam("email") String email) {
+        authService.forgotPassword(email);
+        return "forgot-password";
+    }
 }

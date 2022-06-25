@@ -1,10 +1,12 @@
 package com.kharis.todo.model;
 
 import java.util.Date;
+import jakarta.validation.constraints.Size;
 
 public class Todo {
     private Integer id;
     private String title;
+    @Size(min=10, message="Enter atleast 10 characters")
     private String description;
     private String status;
     private Date updatedAt;

@@ -1,4 +1,4 @@
-<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <t:layout>
     <jsp:attribute name="content">
         <div class="rounded d-flex justify-content-center pt-5">
