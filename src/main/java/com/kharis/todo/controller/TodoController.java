@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import java.util.List;
 
@@ -26,11 +27,12 @@ public class TodoController {
     @GetMapping("/todos")
     public String showAllTodo(ModelMap model){
         Object user = model.get("user");
+        System.out.println(user);
         if (user == null) {
             return "redirect:/auth/login";
         }
-        // List<Todo> todos = todoService.findByUsername((User)user.);
-        // model.addAttribute("todos", todos);
+        List<Todo> todos = todoService.getAllTodo();
+        model.addAttribute("todos", todos);
         return "list_todo";
     }
 
@@ -39,8 +41,24 @@ public class TodoController {
         return "detail_todo";
     }
 
-    @PostMapping("/todos")
-    public void createTodo(Todo todo){}
+    @GetMapping("/todos/add")
+    public String addNewTodo(ModelMap model){
+        Object user = model.get("user");
+        if (user == null) {
+            return "redirect:/auth/login";
+        }
+        return "todo";
+    }
+
+    @PostMapping("/todos/add")
+    public String createTodo(
+        @RequestParam String title, 
+        @RequestParam String description, 
+        @RequestParam String status)
+    {
+        todoService.createTodo(title, description, status);
+        return "redirect:/todos";
+    }
 
     @PutMapping("/todos/{id}")
     public void updateTodo(Todo todo){}
