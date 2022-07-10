@@ -1,13 +1,16 @@
 package com.kharis.todo.controller;
 
 import com.kharis.todo.model.Todo;
-import com.kharis.todo.model.User;
 import com.kharis.todo.service.TodoService;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import jakarta.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,7 +20,6 @@ import java.util.List;
 @Controller
 @SessionAttributes("user")
 public class TodoController {
-    @Autowired
     private final TodoService todoService;
     
     public TodoController(TodoService todoService) {
@@ -37,8 +39,10 @@ public class TodoController {
     }
 
     @GetMapping("/todos/{id}")
-    public String showTodo(Todo todo){
-        return "detail_todo";
+    public String showTodo(@PathVariable int id, ModelMap model){
+        Todo todo = todoService.getTodoById(id);
+        model.addAttribute("todo", todo);
+        return "todo";
     }
 
     @GetMapping("/todos/add")
@@ -47,23 +51,34 @@ public class TodoController {
         if (user == null) {
             return "redirect:/auth/login";
         }
+        Todo todo = new Todo(0, "", "", "");
+        model.put("todo", todo);
         return "todo";
     }
 
     @PostMapping("/todos/add")
-    public String createTodo(
-        @RequestParam String title, 
-        @RequestParam String description, 
-        @RequestParam String status)
+    public String createTodo(ModelMap model, @Valid Todo todo, BindingResult result)
     {
-        todoService.createTodo(title, description, status);
+        if (result.hasErrors()) {
+            return "todo";
+        }
+        todoService.createTodo(todo.getTitle(), todo.getDescription(), todo.getStatus());
         return "redirect:/todos";
     }
 
     @PutMapping("/todos/{id}")
-    public void updateTodo(Todo todo){}
+    public String updateTodo(ModelMap model, @Valid Todo todo, BindingResult result){
+        if (result.hasErrors()) {
+            return "todo";
+        }
+        todoService.updateTodo(todo);
+        return "redirect:/todos";
+    }
 
     @DeleteMapping("/todos/{id}")
-    public void deleteTodo(Todo todo){}
+    public String deleteTodo(@PathVariable int id){
+        todoService.deleteTodo(id);
+        return "redirect:/todos";
+    }
 
 }

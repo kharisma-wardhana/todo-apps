@@ -33,7 +33,7 @@ public class TodoServiceImpl implements TodoService {
 
     @Override
     public void createTodo(String title, String description, String status) {
-        todos.add(new Todo(todoCount++, title, description, status));
+        todos.add(new Todo(++todoCount, title, description, status));
     }
 
     @Override

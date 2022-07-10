@@ -1,13 +1,20 @@
 package com.kharis.todo.model;
 
 import java.util.Date;
+
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class Todo {
     private Integer id;
+    
+    @Size(max = 2)
     private String title;
-    @Size(min=10, message="Enter atleast 10 characters")
+    
+    @NotNull
+    @Size(min = 10, message = "Enter atleast 10 characters")
     private String description;
+    
     private String status;
     private Date updatedAt;
     private Date createdAt;
@@ -61,6 +68,7 @@ public class Todo {
     }
 
     public Todo(Integer id, String title, String description, String status) {
+        super();
         this.id = id;
         this.title = title;
         this.description = description;

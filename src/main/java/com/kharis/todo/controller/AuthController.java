@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @Controller
 @SessionAttributes("user")
 public class AuthController {
-    @Autowired
     private final AuthService authService;
 
     public AuthController(AuthService authService) {
+        super();
         this.authService = authService;
     }
     

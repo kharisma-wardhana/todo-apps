@@ -2,11 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <t:layout>
     <jsp:attribute name="content">
-        <a href="/todos/add" class="link">
-          <button class="btn btn-primary">
-            Add
-          </button>
-        </a>
+        <h3 class="text-center">List Todos</h3>
         <table class="table table-hover">
           <thead>
             <tr>
@@ -24,10 +20,26 @@
                 <td>${todo.title}</td>
                 <td>${todo.description}</td>
                 <td>${todo.status}</td>
-                <td><button class="btn btn-secondary">Edit</button></td>
+                <td>
+                  <div class="row align-items-center justify-content-center">
+                    <div class="col-md-4">
+                      <a href="/todos/${todo.id}" class="btn btn-primary">Edit</a>
+                    </div>
+                    <div class="col-md-4 align-items-center">
+                      <form action="/todos/${todo.id}" method="DELETE">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                      </form>
+                    </div>
+                  </div>
+                </td>
               </tr>
             </c:forEach>
           </tbody>
         </table>
+        <div class="d-flex justify-content-end">
+          <a href="/todos/add" class="link btn btn-success px-4">
+            Add Todo
+          </a>
+        </div>
     </jsp:attribute>
 </t:layout>
