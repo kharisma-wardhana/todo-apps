@@ -1,5 +1,6 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <t:layout>
     <jsp:attribute name="content">
         <h3 class="text-center">List Todos</h3>
@@ -25,11 +26,9 @@
                     <div class="col-md-4">
                       <a href="/todos/${todo.id}" class="btn btn-primary">Edit</a>
                     </div>
-                    <div class="col-md-4 align-items-center">
-                      <form action="/todos/${todo.id}" method="DELETE">
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                      </form>
-                    </div>
+                    <form:form action="/todos/${todo.id}" method="DELETE" class="col-md-4 m-2">
+                      <button type="submit" class="btn btn-danger">Delete</button>
+                    </form:form>
                   </div>
                 </td>
               </tr>

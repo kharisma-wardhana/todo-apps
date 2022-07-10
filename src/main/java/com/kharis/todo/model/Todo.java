@@ -2,19 +2,19 @@ package com.kharis.todo.model;
 
 import java.util.Date;
 
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class Todo {
     private Integer id;
-    
-    @Size(max = 2)
+
+    @Size(max = 2, message = "Enter max 2 char")
     private String title;
-    
+
     @NotNull
-    @Size(min = 10, message = "Enter atleast 10 characters")
+    @Size(min = 3, message = "Enter atleast 10 characters")
     private String description;
-    
+
     private String status;
     private Date updatedAt;
     private Date createdAt;

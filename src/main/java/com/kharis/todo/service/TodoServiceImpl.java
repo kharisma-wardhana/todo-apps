@@ -13,7 +13,7 @@ public class TodoServiceImpl implements TodoService {
     static {
         todos.add(new Todo(1, "test-todo", "Learn Spring MVC", ""));
         todos.add(new Todo(2, "test-todo", "Learn Struts", ""));
-        todos.add(new Todo(3, "test-todo", "Learn Hibernate",""));
+        todos.add(new Todo(3, "test-todo", "Learn Hibernate", ""));
     }
 
     @Override
@@ -28,7 +28,7 @@ public class TodoServiceImpl implements TodoService {
 
     @Override
     public Todo getTodoById(Integer todoId) {
-        return null;
+        return todos.get(todoId - 1);
     }
 
     @Override
@@ -43,6 +43,6 @@ public class TodoServiceImpl implements TodoService {
 
     @Override
     public void deleteTodo(Integer todoId) {
-
+        todos.removeIf(arg0 -> arg0.getId() == todoId);
     }
 }
