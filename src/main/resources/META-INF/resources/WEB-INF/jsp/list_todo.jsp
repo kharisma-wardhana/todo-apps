@@ -2,7 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <t:layout>
-    <jsp:attribute name="content">
+  <jsp:attribute name="content">
+        <%@ include file="common/navbar.jspf" %>	
         <h3 class="text-center">List Todos</h3>
         <table class="table table-hover">
           <thead>

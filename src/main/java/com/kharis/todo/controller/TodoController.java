@@ -3,6 +3,8 @@ package com.kharis.todo.controller;
 import com.kharis.todo.model.Todo;
 import com.kharis.todo.service.TodoService;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -28,11 +30,8 @@ public class TodoController {
 
     @GetMapping("/todos")
     public String showAllTodo(ModelMap model) {
-        Object user = model.get("user");
-        if (user == null) {
-            return "redirect:/auth/login";
-        }
         List<Todo> todos = todoService.getAllTodo();
+        model.put("name" , getLoggedinUsername());
         model.addAttribute("todos", todos);
         return "list_todo";
     }
@@ -75,4 +74,8 @@ public class TodoController {
         return "redirect:/todos";
     }
 
+    private String getLoggedinUsername(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return auth.getName();
+    }
 }

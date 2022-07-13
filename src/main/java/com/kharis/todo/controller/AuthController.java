@@ -22,11 +22,7 @@ public class AuthController {
     
     @GetMapping("/")
     public String index(ModelMap model) {
-        Object user = model.get("user");
-        if (user != null) {
-            return "redirect:/todos";
-        }
-        return "redirect:/auth/login";
+        return "redirect:/todos";
     }
 
     @GetMapping("/auth/login")
