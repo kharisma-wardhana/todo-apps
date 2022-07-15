@@ -16,7 +16,7 @@ public class Todo {
     @Size(max = 2, message = "Enter max 2 char")
     @Column(name = "title")
     private String title;
-    
+
     @NotNull
     @Size(min = 3, message = "Enter atleast 10 characters")
     @Column(name = "description")
@@ -30,6 +30,17 @@ public class Todo {
 
     @Column(name = "updated_at")
     private Date createdAt;
+
+    public Todo() {
+    }
+
+    public Todo(Integer id, String title, String description, String status) {
+        super();
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.status = status;
+    }
 
     public Integer getId() {
         return id;
@@ -77,14 +88,6 @@ public class Todo {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public Todo(Integer id, String title, String description, String status) {
-        super();
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.status = status;
     }
 
     @Override

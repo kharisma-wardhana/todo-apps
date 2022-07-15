@@ -31,13 +31,13 @@ public class TodoController {
     @GetMapping("/todos")
     public String showAllTodo(ModelMap model) {
         List<Todo> todos = todoService.getAllTodo();
-        model.put("name" , getLoggedinUsername());
+        model.put("name", getLoggedinUsername());
         model.addAttribute("todos", todos);
         return "list_todo";
     }
 
     @GetMapping("/todos/{id}")
-    public String showTodo(@PathVariable int id, ModelMap model) {
+    public String showTodo(@PathVariable Integer id, ModelMap model) {
         Todo todo = todoService.getTodoById(id);
         model.put("todo", todo);
         return "todo";
@@ -69,12 +69,12 @@ public class TodoController {
     }
 
     @DeleteMapping("/todos/{id}")
-    public String deleteTodo(@PathVariable int id) {
+    public String deleteTodo(@PathVariable Integer id) {
         todoService.deleteTodo(id);
         return "redirect:/todos";
     }
 
-    private String getLoggedinUsername(){
+    private String getLoggedinUsername() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return auth.getName();
     }

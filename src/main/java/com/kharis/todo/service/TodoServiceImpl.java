@@ -1,25 +1,23 @@
 package com.kharis.todo.service;
 
-import com.kharis.todo.model.Todo;
-import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
+
+import org.springframework.stereotype.Service;
+import com.kharis.todo.model.Todo;
+import com.kharis.todo.repository.TodoRepository;
 
 @Service
 public class TodoServiceImpl implements TodoService {
-    private static List<Todo> todos = new ArrayList<Todo>();
-    private int todoCount = 3;
-    static {
-        todos.add(new Todo(1, "test-todo", "Learn Spring MVC", ""));
-        todos.add(new Todo(2, "test-todo", "Learn Struts", ""));
-        todos.add(new Todo(3, "test-todo", "Learn Hibernate", ""));
+    private final TodoRepository todoRepository;
+    private int todoCount = 1;
+
+    public TodoServiceImpl(TodoRepository todoRepository) {
+        this.todoRepository = todoRepository;
     }
 
     @Override
     public List<Todo> getAllTodo() {
-        return todos;
+        return this.todoRepository.findAll();
     }
 
     @Override
@@ -29,21 +27,22 @@ public class TodoServiceImpl implements TodoService {
 
     @Override
     public Todo getTodoById(Integer todoId) {
-        return todos.get(todoId - 1);
+        return this.todoRepository.findById(todoId);
     }
 
     @Override
     public void createTodo(String title, String description, String status) {
-        todos.add(new Todo(++todoCount, title, description, status));
+        Todo todo = new Todo(todoCount++, title, description, status);
+        this.todoRepository.save(todo);
     }
 
     @Override
     public void updateTodo(Todo todo) {
-
+        this.todoRepository.save(todo);
     }
 
     @Override
     public void deleteTodo(Integer todoId) {
-        todos.removeIf(arg0 -> arg0.getId() == todoId);
+        this.todoRepository.deleteById(todoId);
     }
 }

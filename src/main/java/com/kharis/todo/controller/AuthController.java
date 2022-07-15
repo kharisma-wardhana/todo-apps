@@ -2,7 +2,6 @@ package com.kharis.todo.controller;
 
 import com.kharis.todo.model.User;
 import com.kharis.todo.service.AuthService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,34 +18,32 @@ public class AuthController {
         super();
         this.authService = authService;
     }
-    
+
     @GetMapping("/")
     public String index(ModelMap model) {
         return "redirect:/todos";
     }
 
     @GetMapping("/auth/login")
-    public String showLoginPage(){
+    public String showLoginPage() {
         return "login";
     }
 
     @GetMapping("/auth/register")
-    public String showRegisterPage(){
+    public String showRegisterPage() {
         return "register";
     }
 
     @GetMapping("/auth/forgot-password")
-    public String showForgotPassword(){
+    public String showForgotPassword() {
         return "forgot-password";
     }
 
     @PostMapping("/auth/login")
     public String doLogin(
-        ModelMap model,
-        @RequestParam("username") String username, 
-        @RequestParam("password") String password
-    ) 
-    {
+            ModelMap model,
+            @RequestParam("username") String username,
+            @RequestParam("password") String password) {
         User user = authService.login(username, password);
         if (user != null) {
             model.put("user", user);
@@ -57,12 +54,10 @@ public class AuthController {
 
     @PostMapping("/auth/register")
     public String doRegister(
-        @RequestParam("username") String username, 
-        @RequestParam("email") String email,
-        @RequestParam("password") String password,
-        @RequestParam("confirmPassword") String confirmPassword
-    ) 
-    {
+            @RequestParam("username") String username,
+            @RequestParam("email") String email,
+            @RequestParam("password") String password,
+            @RequestParam("confirmPassword") String confirmPassword) {
         if (!password.equals(confirmPassword)) {
             return "register";
         }
