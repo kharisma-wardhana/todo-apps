@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -38,7 +39,7 @@ public class TodoController {
 
     @GetMapping("/todos/{id}")
     public String showTodo(@PathVariable Integer id, ModelMap model) {
-        Todo todo = todoService.getTodoById(id);
+        Optional<Todo> todo = todoService.getTodoById(id);
         model.put("todo", todo);
         return "todo";
     }

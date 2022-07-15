@@ -1,17 +1,18 @@
 package com.kharis.todo.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import com.kharis.todo.model.Todo;
-import com.kharis.todo.repository.TodoRepository;
+import com.kharis.todo.repository.TodoSpringDataJpaRepo;
 
 @Service
 public class TodoServiceImpl implements TodoService {
-    private final TodoRepository todoRepository;
+    private final TodoSpringDataJpaRepo todoRepository;
     private int todoCount = 1;
 
-    public TodoServiceImpl(TodoRepository todoRepository) {
+    public TodoServiceImpl(TodoSpringDataJpaRepo todoRepository) {
         this.todoRepository = todoRepository;
     }
 
@@ -26,7 +27,7 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
-    public Todo getTodoById(Integer todoId) {
+    public Optional<Todo> getTodoById(Integer todoId) {
         return this.todoRepository.findById(todoId);
     }
 

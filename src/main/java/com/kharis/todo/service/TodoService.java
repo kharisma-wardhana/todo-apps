@@ -3,13 +3,14 @@ package com.kharis.todo.service;
 import com.kharis.todo.model.Todo;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TodoService {
     List<Todo> getAllTodo();
 
     List<Todo> getByUsername(String username);
 
-    Todo getTodoById(Integer todoId);
+    Optional<Todo> getTodoById(Integer todoId);
 
     void createTodo(String title, String description, String status);
 
