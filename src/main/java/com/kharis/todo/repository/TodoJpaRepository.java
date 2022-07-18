@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import com.kharis.todo.model.Todo;
 
-@Repository
-@Transactional
+// @Repository
+// @Transactional
 public class TodoJpaRepository {
     @PersistenceContext
     private EntityManager entityManager;

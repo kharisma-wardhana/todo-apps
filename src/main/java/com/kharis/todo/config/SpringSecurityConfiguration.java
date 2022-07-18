@@ -41,14 +41,28 @@ public class SpringSecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(
-            auth -> auth.anyRequest().authenticated()
+            auth -> auth
+            .antMatchers("/", "index", "/img/**", "/js/**", "/css/**", "/webjars/**").permitAll()
+            .antMatchers("/auth/**").permitAll()
+            .antMatchers("/actuator/**").permitAll()
+            .anyRequest()
+            .authenticated()
         );
-        http.formLogin()
-            .loginPage("/auth/login").permitAll()
-            .and()
-            .logout().logoutUrl("/logout").permitAll();
         http.csrf().disable();
         http.headers().frameOptions().disable();
+        http.formLogin()
+            .loginPage("/auth/login")
+            .permitAll()
+            .defaultSuccessUrl("/todos", true)
+            .passwordParameter("password")
+            .usernameParameter("username")
+        .and()
+        .logout()
+            .logoutUrl("/logout")
+            .clearAuthentication(true)
+            .invalidateHttpSession(true)
+            .deleteCookies("JSESSIONID")
+            .logoutSuccessUrl("/auth/login");
         return http.build();
     }
 }

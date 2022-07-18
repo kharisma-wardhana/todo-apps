@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kharis.todo.model.Todo;
 
-@Repository
+// @Repository
 public class TodoJdbcRepository {
     @Autowired
     private final JdbcTemplate jdbcTemplate;

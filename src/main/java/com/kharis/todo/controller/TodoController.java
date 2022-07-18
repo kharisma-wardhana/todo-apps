@@ -32,7 +32,7 @@ public class TodoController {
     @GetMapping("/todos")
     public String showAllTodo(ModelMap model) {
         List<Todo> todos = todoService.getAllTodo();
-        model.put("name", getLoggedinUsername());
+        model.addAttribute("name", getLoggedinUsername());
         model.addAttribute("todos", todos);
         return "list_todo";
     }
@@ -40,14 +40,14 @@ public class TodoController {
     @GetMapping("/todos/{id}")
     public String showTodo(@PathVariable Integer id, ModelMap model) {
         Optional<Todo> todo = todoService.getTodoById(id);
-        model.put("todo", todo);
+        model.addAttribute("todo", todo);
         return "todo";
     }
 
     @GetMapping("/todos/add")
     public String addNewTodo(ModelMap model) {
-        Todo todo = new Todo(4, "", "", "");
-        model.put("todo", todo);
+        Todo todo = new Todo();
+        model.addAttribute("todo", todo);
         return "todo";
     }
 

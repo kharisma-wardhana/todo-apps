@@ -5,7 +5,7 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -13,11 +13,12 @@ public class Todo {
     @Id
     private Integer id;
 
-    @Size(max = 2, message = "Enter max 2 char")
+    @NotBlank
+    @Size(min = 3, message = "Enter atleast 5 characters")
     @Column(name = "title")
     private String title;
 
-    @NotNull
+    @NotBlank
     @Size(min = 3, message = "Enter atleast 10 characters")
     @Column(name = "description")
     private String description;
