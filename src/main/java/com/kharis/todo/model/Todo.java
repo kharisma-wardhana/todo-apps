@@ -4,14 +4,19 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-@Entity
+@Entity(name = "todos")
 public class Todo {
     @Id
+    @GeneratedValue
     private Integer id;
+
+    @Column(name = "user_id")
+    private Long userId;
 
     @NotBlank
     @Size(min = 3, message = "Enter atleast 5 characters")
@@ -35,9 +40,10 @@ public class Todo {
     public Todo() {
     }
 
-    public Todo(Integer id, String title, String description, String status) {
+    public Todo(Integer id, Long userId, String title, String description, String status) {
         super();
         this.id = id;
+        this.userId = userId;
         this.title = title;
         this.description = description;
         this.status = status;

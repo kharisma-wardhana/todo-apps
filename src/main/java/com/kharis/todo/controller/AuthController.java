@@ -1,6 +1,6 @@
 package com.kharis.todo.controller;
 
-import com.kharis.todo.model.User;
+import com.kharis.todo.model.AppUser;
 import com.kharis.todo.service.AuthService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -44,7 +44,7 @@ public class AuthController {
             ModelMap model,
             @RequestParam("username") String username,
             @RequestParam("password") String password) {
-        User user = authService.login(username, password);
+        AppUser user = authService.login(username, password);
         if (user != null) {
             model.put("user", user);
             return "redirect:/todos";
@@ -61,7 +61,7 @@ public class AuthController {
         if (!password.equals(confirmPassword)) {
             return "register";
         }
-        User user = authService.register(username, email, password);
+        AppUser user = authService.register(username, email, password);
         if (user != null) {
             return "redirect:/todos";
         }

@@ -10,11 +10,11 @@ public interface TodoService {
 
     List<Todo> getByUsername(String username);
 
-    Optional<Todo> getTodoById(Integer todoId);
+    Optional<Todo> getTodoById(Long todoId);
 
     void createTodo(String title, String description, String status);
 
     void updateTodo(Todo todo);
 
-    void deleteTodo(Integer todoId);
+    void deleteTodo(Long todoId);
 }

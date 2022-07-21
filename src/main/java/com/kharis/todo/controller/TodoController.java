@@ -1,10 +1,12 @@
 package com.kharis.todo.controller;
 
+import com.kharis.todo.model.AppUser;
 import com.kharis.todo.model.Todo;
 import com.kharis.todo.service.TodoService;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -38,7 +40,7 @@ public class TodoController {
     }
 
     @GetMapping("/todos/{id}")
-    public String showTodo(@PathVariable Integer id, ModelMap model) {
+    public String showTodo(@PathVariable Long id, ModelMap model) {
         Optional<Todo> todo = todoService.getTodoById(id);
         model.addAttribute("todo", todo);
         return "todo";
@@ -70,7 +72,7 @@ public class TodoController {
     }
 
     @DeleteMapping("/todos/{id}")
-    public String deleteTodo(@PathVariable Integer id) {
+    public String deleteTodo(@PathVariable Long id) {
         todoService.deleteTodo(id);
         return "redirect:/todos";
     }

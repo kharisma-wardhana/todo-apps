@@ -1,39 +1,39 @@
 package com.kharis.todo.service;
 
-import com.kharis.todo.model.User;
+import com.kharis.todo.model.AppUser;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     @Override
     public void createUser() {
 
     }
 
     @Override
-    public void updateUser(User user) {
+    public void updateUser(AppUser user) {
 
     }
 
     @Override
-    public void deleteUser(Integer userId) {
+    public void deleteUser(Long userId) {
 
     }
 
     @Override
-    public List<User> getAllUser() {
+    public List<AppUser> getAllUser() {
         return null;
     }
 
     @Override
-    public User getUserById(Integer userId) {
+    public AppUser getUserById(Long userId) {
         return null;
     }
 
     @Override
-    public User getUserByUsername(String username) {
+    public AppUser getUserByUsername(String username) {
         return null;
     }
 }
