@@ -1,6 +1,8 @@
 package com.kharis.todo.service;
 
+import com.kharis.todo.model.AppLog;
 import com.kharis.todo.model.AppUser;
+import com.kharis.todo.repository.AppLogRepo;
 import com.kharis.todo.repository.AppUserRepo;
 
 import lombok.RequiredArgsConstructor;
@@ -14,20 +16,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
     private final AppUserRepo appUserRepo;
+    private final AppLogRepo appLogRepo;
 
     @Override
     public AppUser login(String username, String password) {
-        if (username.equals("admin") && password.equals("admin")) {
-            AppUser user = AppUser.builder()
-                    .username("admin")
-                    .password("admin")
-                    .email("admin@test.com")
-                    .createdAt(Date.from(Instant.now()))
-                    .updatedAt(Date.from(Instant.now()))
-                    .build();
-            appUserRepo.save(user);
-            return user;
-        }
         return null;
     }
 

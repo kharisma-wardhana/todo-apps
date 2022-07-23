@@ -30,8 +30,9 @@ public class SpringSecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        CustomAuthFilter customAuthFilter = new CustomAuthFilter(customAuthManager());
-        customAuthFilter.setFilterProcessesUrl("/api/v1/users/login");
+        // CustomAuthFilter customAuthFilter = new
+        // CustomAuthFilter(customAuthManager());
+        // customAuthFilter.setFilterProcessesUrl("/api/v1/users/login");
         http.authorizeHttpRequests(
                 auth -> auth
                         .antMatchers("/", "index", "/img/**", "/js/**", "/css/**", "/webjars/**").permitAll()
@@ -41,15 +42,14 @@ public class SpringSecurityConfiguration {
                         .authenticated());
         http.csrf().disable();
         http.headers().frameOptions().disable();
-        http.addFilter(customAuthFilter);
+        // http.addFilter(customAuthFilter);
         http.formLogin()
                 .loginPage("/auth/login")
                 .permitAll()
                 .defaultSuccessUrl("/todos", true)
                 .passwordParameter("password")
-                .usernameParameter("username")
-                .and()
-                .logout()
+                .usernameParameter("username");
+        http.logout()
                 .logoutUrl("/logout")
                 .clearAuthentication(true)
                 .invalidateHttpSession(true)

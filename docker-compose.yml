@@ -13,9 +13,39 @@ services:
     networks:
       - todo-network
 
+  todo-nosql:
+    container_name: todo-nosql
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data/mongo:/data
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "todo"
+      MONGO_INITDB_ROOT_PASSWORD: "todo"
+    networks:
+      - todo-network
+
+  mongo-express:
+    container_name: mongo-express
+    image: mongo-express:latest
+    depends_on:
+      - todo-nosql
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: "todo"
+      ME_CONFIG_MONGODB_ADMINPASSWORD: "todo"
+      ME_CONFIG_MONGODB_SERVER: "todo-nosql"
+    networks:
+      - todo-network
+
   todo-db:
     container_name: todo-db
     image: mysql:8.0.29-oracle
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+      - ./config/mysql:/etc/mysql/conf.d
     environment:
       MYSQL_ROOT_PASSWORD: "root"
       MYSQL_DATABASE: "todo"

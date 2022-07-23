@@ -7,8 +7,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.kharis.todo.model.AppLog;
 import com.kharis.todo.model.AppUser;
 import com.kharis.todo.model.Todo;
+import com.kharis.todo.repository.AppLogRepo;
 import com.kharis.todo.repository.AppUserRepo;
 import com.kharis.todo.repository.TodoSpringDataJpaRepo;
 
@@ -16,12 +18,14 @@ import com.kharis.todo.repository.TodoSpringDataJpaRepo;
 public class TodoServiceImpl implements TodoService {
     private final TodoSpringDataJpaRepo todoRepository;
     private final AppUserRepo userRepository;
+    private final AppLogRepo logRepository;
 
     private int todoCount = 1;
 
-    public TodoServiceImpl(TodoSpringDataJpaRepo todoRepository, AppUserRepo userRepository) {
+    public TodoServiceImpl(TodoSpringDataJpaRepo todoRepository, AppUserRepo userRepository, AppLogRepo logRepository) {
         this.todoRepository = todoRepository;
         this.userRepository = userRepository;
+        this.logRepository = logRepository;
     }
 
     @Override
@@ -47,6 +51,12 @@ public class TodoServiceImpl implements TodoService {
 
         Todo todo = new Todo(todoCount++, user.getId(), title, description, status);
         this.todoRepository.save(todo);
+        AppLog appLog = AppLog.builder()
+                .ipAddress("localhost")
+                .userAgent("local-browser")
+                .message("User " + user.getUsername() + " created new todo " + todo.getTitle())
+                .build();
+        logRepository.insert(appLog);
     }
 
     @Override
