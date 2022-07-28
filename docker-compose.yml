@@ -1,0 +1,62 @@
+version: '3.9'
+services:
+  todo-app:
+    container_name: todo-app
+    build:
+      context: .
+    depends_on:
+      - todo-db
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+    networks:
+      - todo-network
+
+  todo-db:
+    container_name: todo-db
+    image: mysql:latest
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+      - ./config/mysql:/etc/mysql/conf.d
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: "todo"
+      MYSQL_USER: "user"
+      MYSQL_PASSWORD: "secret"
+    ports:
+      - "3309:3306"
+    networks:
+      - todo-network
+
+  todo-mongodb:
+    container_name: todo-mongodb
+    image: mongo:latest
+    volumes:
+      - ./data/mongodb:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "root"
+      MONGO_INITDB_ROOT_PASSWORD: "root"
+    ports:
+      - "3310:27017"
+    networks:
+      - todo-network
+
+  mongo-express:
+    container_name: mongo-express
+    image: mongo-express:latest
+    depends_on:
+      - todo-mongodb
+    ports:
+      - "3311:8081"
+    environment:
+      ME_CONFIG_MONGO_ADMINUSERNAME: "root"
+      ME_CONFIG_MONGO_ADMINPASSWORD: "root"
+      ME_CONFIG_MONGO_URL: "mongodb://todo-mongodb:27017"
+    networks:
+      - todo-network
+
+networks:
+  todo-network:
+    name: todo-network
+    driver: bridge
