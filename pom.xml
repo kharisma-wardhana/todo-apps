@@ -15,6 +15,7 @@
 	<description>Simple project to learn Spring Boot with TDD </description>
 	<properties>
 		<java.version>17</java.version>
+		<jacoco.version>0.8.8</jacoco.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -92,7 +93,33 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<!-- Plugins for JACOCO Coverage report -->
+			<plugin>
+					<groupId>org.jacoco</groupId>
+					<artifactId>jacoco-maven-plugin</artifactId>
+					<version>${jacoco.version}</version>
+					<configuration>
+							<excludes>
+									<exclude>com/kharis/todov2/model/*</exclude>
+									<exclude>**/config/*</exclude>
+							</excludes>
+					</configuration>
+					<executions>
+							<execution>
+									<id>jacoco-initialize</id>
+									<goals>
+											<goal>prepare-agent</goal>
+									</goals>
+							</execution>
+							<execution>
+									<id>jacoco-site</id>
+									<phase>test</phase>
+									<goals>
+											<goal>report</goal>
+									</goals>
+							</execution>
+					</executions>
+			</plugin>
 		</plugins>
 	</build>
-
 </project>
